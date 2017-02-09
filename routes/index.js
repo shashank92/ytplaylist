@@ -25,7 +25,25 @@ router.get('/oauth2callback', function(req, res, next) {
     } else {
       oauth2Client.setCredentials(tokens);
       // res.render('index', { title: 'ytplaylist' });
-      res.json(tokens);
+
+      var YouTube = Google.youtube({
+        version: 'v3',
+        auth: oauth2Client
+      });
+
+      YouTube.playlists.list({
+        part: 'snippet',
+        mine: true
+      }, function(err, response) {
+        if (err) {
+          next(err);
+        } else {
+          response.items.forEach((item) => {
+            console.log(item.snippet);
+          });
+          res.json(tokens);
+        }
+      })
     }
   });
 });
