@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "nodemon ./bin/www"
   },
   "dependencies": {
     "body-parser": "~1.16.0",
@@ -14,5 +14,9 @@
     "node-sass-middleware": "0.9.8",
     "pug": "~2.0.0-beta10",
     "serve-favicon": "~2.3.2"
+  },
+  "main": "app",
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }
