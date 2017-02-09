@@ -6,3 +6,7 @@ html
   body
     block content
     script(src='/javascripts/reload-client.js')
+    if tokens
+      script#tokens(type='application/json')!= tokens
+    if items
+      script#items(type='application/json')!= items

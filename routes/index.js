@@ -21,7 +21,8 @@ router.get('/', function(req, res) {
 router.get('/oauth2callback', function(req, res, next) {
   oauth2Client.getToken(req.query.code, function (err, tokens) {
     if (err) {
-      next(err);
+      res.redirect('/');
+      //next(err);
     } else {
       oauth2Client.setCredentials(tokens);
       // res.render('index', { title: 'ytplaylist' });
@@ -38,10 +39,14 @@ router.get('/oauth2callback', function(req, res, next) {
         if (err) {
           next(err);
         } else {
-          response.items.forEach((item) => {
-            console.log(item.snippet);
+          var jsonItems = JSON.stringify(response.items);
+          var jsonTokens = JSON.stringify(tokens);
+          
+          res.render('index', {
+            title: 'ytplaylist',
+            items: jsonItems,
+            tokens: jsonTokens
           });
-          res.json(tokens);
         }
       })
     }
