@@ -7,6 +7,8 @@
 var app = require('../app');
 var debug = require('debug')('ytplaylist:server');
 var http = require('http');
+var reload = require('reload');
+var watch = require('watch');
 
 /**
  * Get port from environment and store in Express.
@@ -20,6 +22,12 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+
+var reloadServer = reload(server, app);
+
+watch.watchTree(process.cwd(), function(f, curr, prev) {
+  reloadServer.reload();
+});
 
 /**
  * Listen on provided port, on all network interfaces.
