@@ -1,0 +1,5 @@
+extends layout.pug
+
+block content
+  script#tokens-json(type='application/json')!= tokens
+  script(src='/javascripts/store-tokens.js')
