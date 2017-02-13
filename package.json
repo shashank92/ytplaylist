@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon bin/www"
+    "start": "npm run build && nodemon bin/www",
+    "build": "webpack --config webpack.config.js"
   },
   "dependencies": {
     "body-parser": "~1.16.0",
@@ -15,11 +16,18 @@
     "morgan": "~1.7.0",
     "node-sass-middleware": "0.9.8",
     "pug": "~2.0.0-beta10",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
     "reload": "^1.1.1",
     "serve-favicon": "~2.3.2"
   },
   "main": "app",
   "devDependencies": {
-    "nodemon": "^1.11.0"
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
+    "babel-preset-latest": "^6.22.0",
+    "babel-preset-react": "^6.22.0",
+    "nodemon": "^1.11.0",
+    "webpack": "^2.2.1"
   }
 }
