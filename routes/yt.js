@@ -4,11 +4,6 @@ var router = express.Router();
 var yt = require('../lib/youtube');
 
 router.get('/search', function(req, res, next) {
-  if (!global.initialTokens) {
-    res.redirect('/oauth2');
-    return;
-  }
-
   yt.search.list({
     q: req.query.q,
     part: 'snippet',
@@ -24,14 +19,12 @@ router.get('/search', function(req, res, next) {
       return;
     }
     var videos = json.items.map(function(item) {
-      var data = item.snippet;
+      var snippet = item.snippet;
       return {
         id: item.id.videoId,
-        data: {
-          title: data.title,
-          description: data.description,
-          thumbnail: data.thumbnails.high
-        }
+        title: snippet.title,
+        description: snippet.description,
+        thumbnail: snippet.thumbnails.high
       };
     });
     res.json(videos);
@@ -39,11 +32,6 @@ router.get('/search', function(req, res, next) {
 });
 
 router.get('/playlists', function(req, res, next) {
-  if (!global.initialTokens) {
-    res.redirect('/oauth2');
-    return;
-  }
-
   yt.search.list({
     q: req.query.q,
     part: 'snippet',
@@ -59,14 +47,12 @@ router.get('/playlists', function(req, res, next) {
       return;
     }
     var videos = json.items.map(function(item) {
-      var data = item.snippet;
+      var snippet = item.snippet;
       return {
         id: item.id.videoId,
-        data: {
-          title: data.title,
-          description: data.description,
-          thumbnail: data.thumbnails.high
-        }
+        title: snippet.title,
+        description: snippet.description,
+        thumbnail: snippet.thumbnails.high
       };
     });
     res.json(videos);

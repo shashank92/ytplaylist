@@ -1,7 +1,7 @@
 var path = require("path")
 
 module.exports = {
-  entry: "./src/index",
+  entry: ["babel-polyfill", "whatwg-fetch", "./src/index"],
   output: {
     path: path.resolve(__dirname, "public/javascripts"),
     filename: "bundle.js",

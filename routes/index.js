@@ -2,18 +2,9 @@ var express = require('express');
 var router = express.Router();
 
 var fs = require('fs');
-var storedTokens = require('../tokens') || null;
-console.log('STORED TOKENS:');
-console.log(storedTokens);
-
 var oauth2Client = require('../lib/oauth2-client');
 
 router.get('/', function(req, res) {
-  if (!storedTokens) {
-    res.redirect('/oauth2');
-    return;
-  }
-
   res.render('index', {
     title: 'ytplaylist'
   });
