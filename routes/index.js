@@ -6,7 +6,14 @@ var oauth2Client = oauth.oauth2Client;
 var authUrl = oauth.authUrl;
 
 router.get('/', function(req, res) {
-  res.render('index', { title: 'ytplaylist' });
+  if (!global.initialTokens) {
+    res.redirect('/oauth2');
+    return;
+  }
+
+  res.render('index', {
+    title: 'ytplaylist'
+  });
 });
 
 router.get('/oauth2', function(req, res) {
@@ -18,11 +25,17 @@ router.get('/oauth2callback', function(req, res, next) {
     if (err) {
       next(err);
     } else {
-      var tokensJson = JSON.stringify(tokens);
+      console.log('Tokens received:');
+      console.log(tokens);
 
-      res.render('oauth2callback', {
-        tokens: tokensJson
+      global.initialTokens = tokens;
+
+      oauth2Client.setCredentials({
+        access_token: tokens.access_token,
+        refresh_token: tokens.refresh_token
       });
+
+      res.redirect('..');
     }
   });
 });
