@@ -22,23 +22,15 @@ router.get('/oauth2callback', function(req, res, next) {
     if (err) {
       next(err);
     } else {
-      var tokensJson = JSON.stringify(tokens, null, 2);
-
-      fs.writeFile('tokens.json', tokensJson, function(err) {
-        if (err) {
-          next(err);
-          return;
-        }
-
-        storedTokens = tokens;
-
-        oauth2Client.setCredentials({
-          access_token: tokens.access_token,
-          refresh_token: tokens.refresh_token
-        });
-
-        res.redirect('/');
+      oauth2Client.setCredentials({
+        access_token: tokens.access_token,
+        refresh_token: tokens.refresh_token
       });
+
+      res.redirect('/');
+
+      var tokensJson = JSON.stringify(tokens, null, 2);
+      fs.writeFileSync('tokens.json', tokensJson);
     }
   });
 });

@@ -1,23 +1,16 @@
 import React from 'react'
-import { Grid, Segment } from 'semantic-ui-react'
-import Playlists from './Playlists'
-import YtSearch from './YtSearch'
+import App from './App'
 
-export default class Root extends React.Component {
-  render() {
+const Root = () => {
+  try {
     return (
-      <Grid centered columns={2} textAlign='left'>
-        <Grid.Column mobile={14} tablet={7} computer={7}>
-          <Segment>
-            <Playlists />
-          </Segment>
-        </Grid.Column>
-        <Grid.Column mobile={14} tablet={7} computer={7}>
-          <Segment>
-            <YtSearch />
-          </Segment>
-        </Grid.Column>
-      </Grid>
-    );
+      <App />
+    )
+  } catch(e) {
+    return (
+      <div>{e}</div>
+    )
   }
 }
+
+export default Root
