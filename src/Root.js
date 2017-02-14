@@ -1,5 +1,6 @@
 import React from 'react'
 import { Grid, Segment } from 'semantic-ui-react'
+import Playlists from './Playlists'
 import YtSearch from './YtSearch'
 
 export default class Root extends React.Component {
@@ -8,7 +9,7 @@ export default class Root extends React.Component {
       <Grid centered columns={2} textAlign='left'>
         <Grid.Column mobile={14} tablet={7} computer={7}>
           <Segment>
-            Manage Playlists
+            <Playlists />
           </Segment>
         </Grid.Column>
         <Grid.Column mobile={14} tablet={7} computer={7}>
