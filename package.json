@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "npm run build && nodemon bin/www",
-    "build": "webpack --progress --colors -p",
-    "watch": "webpack --progress --colors --watch -d"
+    "start": "nodemon bin/www",
+    "watch": "webpack --progress --colors --watch -d",
+    "build": "webpack --progress --colors -p"
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",
