@@ -1,9 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var oauth = require('../lib/oauth');
-var oauth2Client = oauth.oauth2Client;
-var authUrl = oauth.authUrl;
+var oauth2Client = require('../lib/oauth2-client');
 
 router.get('/', function(req, res) {
   if (!global.initialTokens) {
@@ -17,7 +15,10 @@ router.get('/', function(req, res) {
 });
 
 router.get('/oauth2', function(req, res) {
-  res.redirect(authUrl);
+  res.redirect(oauth2Client.generateAuthUrl({
+    access_type: 'offline',
+    scope: 'https://www.googleapis.com/auth/youtube.force-ssl'
+  }));
 });
 
 router.get('/oauth2callback', function(req, res, next) {
