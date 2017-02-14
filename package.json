@@ -18,6 +18,9 @@
     "pug": "~2.0.0-beta10",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-redux": "^5.0.2",
+    "react-redux-form": "^1.5.5",
+    "redux": "^3.6.0",
     "reload": "^1.1.1",
     "serve-favicon": "~2.3.2"
   },

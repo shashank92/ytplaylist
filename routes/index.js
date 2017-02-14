@@ -1,10 +1,15 @@
 var express = require('express');
 var router = express.Router();
 
+var fs = require('fs');
+var storedTokens = require('../tokens') || null;
+console.log('STORED TOKENS:');
+console.log(storedTokens);
+
 var oauth2Client = require('../lib/oauth2-client');
 
 router.get('/', function(req, res) {
-  if (!global.initialTokens) {
+  if (!storedTokens) {
     res.redirect('/oauth2');
     return;
   }
@@ -26,17 +31,24 @@ router.get('/oauth2callback', function(req, res, next) {
     if (err) {
       next(err);
     } else {
-      console.log('Tokens received:');
-      console.log(tokens);
+      var tokensJson = JSON.stringify(tokens, null, 2);
 
-      global.initialTokens = tokens;
+      fs.writeFile('tokens.json', tokensJson, function(err) {
+        if (err) {
+          next(err);
+          return;
+        }
 
-      oauth2Client.setCredentials({
-        access_token: tokens.access_token,
-        refresh_token: tokens.refresh_token
+        storedTokens = tokens;
+
+        oauth2Client.setCredentials({
+          access_token: tokens.access_token,
+          refresh_token: tokens.refresh_token
+        });
+
+        res.redirect('/');
+        console.log('redirecting...');
       });
-
-      res.redirect('..');
     }
   });
 });
