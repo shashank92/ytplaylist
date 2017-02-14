@@ -47,7 +47,6 @@ router.get('/oauth2callback', function(req, res, next) {
         });
 
         res.redirect('/');
-        console.log('redirecting...');
       });
     }
   });
