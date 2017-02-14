@@ -5,7 +5,7 @@ import YtSearch from './YtSearch'
 export default class Root extends React.Component {
   render() {
     return (
-      <Grid centered columns={2}>
+      <Grid centered columns={2} textAlign='left'>
         <Grid.Column mobile={14} tablet={7} computer={7}>
           <Segment>
             Manage Playlists

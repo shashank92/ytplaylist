@@ -1,14 +1,24 @@
 import React from 'react'
 
-import { LocalForm, Control } from 'react-redux-form'
+import { Form } from 'semantic-ui-react'
 
 export default class MyApp extends React.Component {
-  handleChange(values) {}
-  handleUpdate(form) {}
+  constructor(props) {
+    super(props)
 
-  handleSubmit(values) {
+    this.state = {
+      formData: {}
+    }
+
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  handleSubmit(e, { formData }) {
+    e.preventDefault()
+
     console.log('submitting')
-    fetch(`/yt/search?q=${encodeURIComponent(values.query)}`)
+
+    fetch(`/yt/search?q=${encodeURIComponent(formData.query)}`)
       .then(function(response) {
         return response.json()
       }).then(function(json) {
@@ -21,14 +31,12 @@ export default class MyApp extends React.Component {
 
   render() {
     return (
-      <LocalForm
-        onUpdate={(form) => this.handleUpdate(form)}
-        onChange={(values) => this.handleChange(values)}
-        onSubmit={(values) => this.handleSubmit(values)} >
-        <div><label>Search YouTube?</label></div>
-        <Control.text model=".query" />
-        <button>Submit!</button>
-      </LocalForm>
+      <Form onSubmit={this.handleSubmit}>
+        <Form.Field>
+          <Form.Input name='query' placeholder='Search' />
+        </Form.Field>
+        <Form.Button type='submit'>Search</Form.Button>
+      </Form>
     );
   }
 }
