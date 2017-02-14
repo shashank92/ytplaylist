@@ -1,28 +1,26 @@
 import React from 'react'
 
-import { Form } from 'semantic-ui-react'
+import { Form, Divider, Loader } from 'semantic-ui-react'
 
-export default class MyApp extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      formData: {}
-    }
-
-    this.handleSubmit = this.handleSubmit.bind(this)
+export default class YtSearch extends React.Component {
+  state = {
+    formData: {},
+    results: [],
+    searching: false
   }
 
-  handleSubmit(e, { formData }) {
+  handleSubmit = (e, { formData }) => {
     e.preventDefault()
+    this.setState({ formData })
 
-    console.log('submitting')
+    this.setState({ searching: true })
 
     fetch(`/yt/search?q=${encodeURIComponent(formData.query)}`)
       .then(function(response) {
         return response.json()
       }).then(function(json) {
         console.log('parsed json', json)
+        this.setState({ results: json, searching: false })
       }).catch(function(e) {
         // client side redirection is a good idea as far as ajax is concerned
         window.location = '/oauth2'
@@ -31,12 +29,18 @@ export default class MyApp extends React.Component {
 
   render() {
     return (
-      <Form onSubmit={this.handleSubmit}>
-        <Form.Field>
-          <Form.Input name='query' placeholder='Search' />
-        </Form.Field>
-        <Form.Button type='submit'>Search</Form.Button>
-      </Form>
+      <div>
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Group inline>
+            <Form.Input name='query' placeholder='Search' />
+            <Form.Button type='submit'>
+              <i className="fa fa-search" aria-hidden="true"></i>
+            </Form.Button>
+          </Form.Group>
+        </Form>
+        <Divider />
+        <Loader active={this.state.searching} inline='centered' />
+      </div>
     );
   }
 }
