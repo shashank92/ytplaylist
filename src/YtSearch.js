@@ -25,7 +25,7 @@ export default class MyApp extends React.Component {
         onUpdate={(form) => this.handleUpdate(form)}
         onChange={(values) => this.handleChange(values)}
         onSubmit={(values) => this.handleSubmit(values)} >
-        <label>Search YouTube?</label>
+        <div><label>Search YouTube?</label></div>
         <Control.text model=".query" />
         <button>Submit!</button>
       </LocalForm>

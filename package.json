@@ -22,6 +22,7 @@
     "react-redux": "^5.0.2",
     "react-redux-form": "^1.5.5",
     "redux": "^3.6.0",
+    "semantic-ui-react": "^0.64.8",
     "serve-favicon": "~2.3.2",
     "whatwg-fetch": "^2.0.2"
   },
