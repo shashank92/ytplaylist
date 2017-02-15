@@ -22,8 +22,7 @@ export default class YtSearch extends React.Component {
         console.log('parsed json', json)
         this.setState({ results: json, searching: false })
       }).catch(function(e) {
-        // client side redirection is a good idea as far as ajax is concerned
-        //window.location = '/oauth2'
+        console.log('Error: ', e);
       })
   }
 

@@ -2,12 +2,17 @@ var express = require('express');
 var router = express.Router();
 
 var fs = require('fs');
+var creds = require('../lib/creds');
 var oauth2Client = require('../lib/oauth2-client');
 
 router.get('/', function(req, res) {
-  res.render('index', {
-    title: 'ytplaylist'
-  });
+  if (!creds || (creds.expiry_date <= Date.now())) {
+    res.redirect('/oauth2');
+  } else {
+    res.render('index', {
+      title: 'ytplaylist'
+    });
+  }
 });
 
 router.get('/oauth2', function(req, res) {
@@ -18,19 +23,19 @@ router.get('/oauth2', function(req, res) {
 });
 
 router.get('/oauth2callback', function(req, res, next) {
-  oauth2Client.getToken(req.query.code, function (err, tokens) {
+  res.redirect('/');
+
+  oauth2Client.getToken(req.query.code, function (err, creds) {
     if (err) {
-      next(err);
+      throw err;
     } else {
       oauth2Client.setCredentials({
-        access_token: tokens.access_token,
-        refresh_token: tokens.refresh_token
+        access_token: creds.access_token,
+        refresh_token: creds.refresh_token
       });
 
-      res.redirect('/');
-
-      var tokensJson = JSON.stringify(tokens, null, 2);
-      fs.writeFileSync('tokens.json', tokensJson);
+      var credsJson = JSON.stringify(creds, null, 2);
+      fs.writeFileSync('creds.json', credsJson);
     }
   });
 });
