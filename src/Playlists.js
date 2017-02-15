@@ -28,8 +28,9 @@ export default class Playlists extends React.Component {
     const playlists = this.state.playlists;
     const playlistsItemList = playlists.map((playlist) => {
       const { url, width, height } = playlist.thumbnail;
+      let myAttr = {'data-attr': 'value'}
       return (
-        <Item key={playlist.id} onClick={this.handleClick}>
+        <Item key={playlist.id} onClick={this.handleClick} {...myAttr} >
           <Item.Image width={ width } height={ height } src={ url } />
 
           <Item.Content>
