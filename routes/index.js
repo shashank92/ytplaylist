@@ -2,10 +2,10 @@ var express = require('express');
 var router = express.Router();
 
 var fs = require('fs');
-var creds = require('../lib/creds');
 var oauth2Client = require('../lib/oauth2-client');
 
 router.get('/', function(req, res) {
+  var creds = global.creds;
   if (!creds || (creds.expiry_date <= Date.now())) {
     res.redirect('/oauth2');
   } else {
@@ -23,9 +23,6 @@ router.get('/oauth2', function(req, res) {
 });
 
 router.get('/oauth2callback', function(req, res, next) {
-  // immediate redirect to avoid connection refused error
-  res.redirect('/');
-
   oauth2Client.getToken(req.query.code, function (err, creds) {
     if (err) {
       throw err;
@@ -34,6 +31,9 @@ router.get('/oauth2callback', function(req, res, next) {
         access_token: creds.access_token,
         refresh_token: creds.refresh_token
       });
+
+      global.creds = creds;
+      res.redirect('/');
 
       var credsJson = JSON.stringify(creds, null, 2);
       fs.writeFileSync('creds.json', credsJson);
