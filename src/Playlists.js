@@ -2,8 +2,21 @@ import React from 'react'
 import { Button, Card, Image } from 'semantic-ui-react'
 
 export default class Playlists extends React.Component {
+  state = {
+    playlists: [],
+    loadingPlaylists: false
+  }
+
   componentDidMount() {
-    console.log('playlists have mounted')
+    this.setState({ loadingPlaylists: true })
+
+    fetch('/yt/playlists')
+      .then((response) => {
+        return response.json()
+      }).then((json) => {
+        console.log('parsed json', json)
+        this.setState({ playlists: json, loadingPlaylists: false })
+      }).catch((e) => (console.log('Error: ', e)))
   }
 
   render() {
