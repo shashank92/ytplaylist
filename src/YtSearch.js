@@ -1,6 +1,7 @@
 import React from 'react'
 
-import { Form, Divider, Loader } from 'semantic-ui-react'
+import { Form, Loader } from 'semantic-ui-react'
+import SearchResults from './SearchResults'
 
 export default class YtSearch extends React.Component {
   state = {
@@ -29,14 +30,14 @@ export default class YtSearch extends React.Component {
       <div>
         <Form onSubmit={this.handleSubmit}>
           <Form.Group inline>
-            <Form.Input name='query' placeholder='Search' />
+            <Form.Input name='query' placeholder='YouTube Search' />
             <Form.Button type='submit'>
               <i className="fa fa-search" aria-hidden="true"></i>
             </Form.Button>
           </Form.Group>
         </Form>
-        <Divider />
         <Loader active={this.state.searching} inline='centered' />
+        <SearchResults results={this.state.results} />
       </div>
     );
   }
