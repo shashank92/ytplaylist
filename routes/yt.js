@@ -32,7 +32,17 @@ router.get('/search', function(req, res, next) {
 });
 
 router.get('/playlists', function(req, res, next) {
-  res.json({bilbo: 'baggins'});
+  yt.playlists.list({
+    part: 'snippet',
+    mine: true
+  }, function(err, json) {
+    if (err) {
+      next(err);
+      return;
+    }
+
+    res.json(json);
+  });
 });
 
 module.exports = router;
