@@ -16,4 +16,4 @@ npm-debug.log
 
 # custom
 bundle.js
-tokens.json
+creds.json

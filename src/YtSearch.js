@@ -16,14 +16,12 @@ export default class YtSearch extends React.Component {
     this.setState({ searching: true })
 
     fetch(`/yt/search?q=${encodeURIComponent(formData.query)}`)
-      .then(function(response) {
+      .then((response) => {
         return response.json()
-      }).then(function(json) {
+      }).then((json) => {
         console.log('parsed json', json)
         this.setState({ results: json, searching: false })
-      }).catch(function(e) {
-        console.log('Error: ', e);
-      })
+      }).catch((e) => (console.log('Error: ', e)))
   }
 
   render() {

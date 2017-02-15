@@ -23,6 +23,7 @@ router.get('/oauth2', function(req, res) {
 });
 
 router.get('/oauth2callback', function(req, res, next) {
+  // immediate redirect to avoid connection refused error
   res.redirect('/');
 
   oauth2Client.getToken(req.query.code, function (err, creds) {
