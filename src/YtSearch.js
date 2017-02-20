@@ -16,7 +16,7 @@ export default class YtSearch extends React.Component {
 
     this.setState({ searching: true })
 
-    fetch(`/yt/search?q=${encodeURIComponent(formData.query)}`)
+    fetch(`/api/yt/search?q=${encodeURIComponent(formData.query)}`)
       .then((response) => {
         return response.json()
       }).then((json) => {

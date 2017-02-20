@@ -15,7 +15,7 @@ export default class Playlists extends React.Component {
   componentDidMount() {
     this.setState({ loadingPlaylists: true })
 
-    fetch('/yt/playlists')
+    fetch('/api/yt/playlists')
       .then((response) => {
         return response.json()
       }).then((json) => {

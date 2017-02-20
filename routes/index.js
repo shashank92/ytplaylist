@@ -4,6 +4,8 @@ var router = express.Router();
 var fs = require('fs');
 var oauth2Client = require('../lib/oauth2-client');
 
+var promises = require('../lib/promises.js');
+
 router.get('/', function(req, res) {
   var creds = global.creds;
   if (!creds || (creds.expiry_date <= Date.now())) {
